@@ -11,28 +11,23 @@ import jakarta.ws.rs.core.Response
 import java.net.URI
 
 @Path("/todos")
-class CreateTodoResource(
-    private val createTodo: CreateTodoUseCase
-) {
+class CreateTodoResource(private val createTodo: CreateTodoUseCase) {
 
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    fun create(request: CreateTodoInput): Response? {
+  @POST
+  @Produces(MediaType.APPLICATION_JSON)
+  fun create(request: CreateTodoInput): Response? {
 
-        val res = createTodo.execute(request)
+    val res = createTodo.execute(request)
 
-        if(res.isFailure)
-        {
-            return res.formatFailResponse()
-        }
-
-        val createdTodo = res.getOrThrow();
-
-        val response = Response
-            .created(URI(""))
-            .entity(createdTodo)
-            .build()
-
-        return response
+    if (res.isFailure) {
+      return res.formatFailResponse()
     }
+
+    val createdTodo = res.getOrThrow()
+
+    val response = Response.created(URI("")).entity(createdTodo).build()
+
+    return response
+  }
 }
+
