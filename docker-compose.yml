@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:16
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=postgres
+    - POSTGRES_DB=omem-db
+    volumes:
+      - local_pgdata:/var/lib/postgresql/data
+    networks:
+      - db_network
+
+  pgadmin:
+    image: elestio/pgadmin:REL-8_8
+
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: test@example.com
+      PGADMIN_DEFAULT_PASSWORD: postgres
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - db_network
+
+volumes:
+  local_pgdata:
+  pgadmin-data:
+
+networks:
+  db_network:

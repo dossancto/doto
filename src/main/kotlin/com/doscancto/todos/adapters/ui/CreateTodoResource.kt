@@ -10,7 +10,7 @@ import jakarta.ws.rs.core.MediaType
 import jakarta.ws.rs.core.Response
 import java.net.URI
 
-@Path("/todo")
+@Path("/todos")
 class CreateTodoResource(
     private val createTodo: CreateTodoUseCase
 ) {
@@ -34,6 +34,5 @@ class CreateTodoResource(
             .build()
 
         return response
-        ;
     }
 }
